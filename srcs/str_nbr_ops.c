@@ -18,14 +18,16 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/05 16:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 17:04 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/05 18:59 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
 #include "str_nbr_ops.h"
 
-int		m_atoi(char *str)
+#include <stdio.h>
+
+int		m_atoi_base(char *str, int base)
 {
 	int	sign;
 	int	res;
@@ -40,15 +42,46 @@ int		m_atoi(char *str)
 			sign = -1;
 		str++;
 	}
-	while (*str >= '0' && *str <= '9')
-		res = res * 10 + (*str + 0x30);
+	while (m_strindex(BASE_CHARS, *str) >= 0)
+		res = (res * base) + m_strindex(BASE_CHARS, *(str++));
 	return (res * sign);
 }
 
-char	*m_itoa(int nbr)
+char	*m_itoa_base(int nbr, int base)
 {
-	char	*res;
+	char			*res;
+	int				l;
+	unsigned int	t;
+	int				n;
 
-	res = malloc(nbr * sizeof(*res));
+	n = 0;
+	t = nbr;
+	if (nbr < 0 && base == 10)
+		n = 1;
+	if (n)
+		t = -nbr;
+	l = nbrlen_base(t, (unsigned int)base);
+	res = malloc((l + n + 1) * sizeof(*res));
+	res[l + n] = 0;
+	while (l >= n)
+	{
+		res[l--] = BASE_CHARS[t % base];
+		t /= base;
+	}
+	if (n)
+		res[0] = '-';
 	return (res);
+}
+
+int		nbrlen_base(unsigned int nbr, unsigned int base)
+{
+	int	l;
+
+	l = 0;
+	while (nbr >= base)
+	{
+		nbr /= base;
+		l++;
+	}
+	return (l);
 }

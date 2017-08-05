@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/05 00:01 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 00:01 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/05 17:44 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -42,4 +42,16 @@ char	*m_strdup(char *str)
 	return (res);
 }
 
+int		m_strindex(char *str, char c)
+{
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}

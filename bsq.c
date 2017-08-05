@@ -18,15 +18,15 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:44 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/04 23:44 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/05 18:48 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
 #include "io.h"
-
-int	main(void)
+int		main(int ac, char **av)
 {
-	m_putchar('P');
+	if (ac == 2)
+		m_putnbr_base(m_atoi_base(av[1], 16), 10);
 	return (0);
 }

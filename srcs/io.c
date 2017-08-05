@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:36 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 13:14 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/05 18:17 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -35,9 +35,7 @@ void	m_putstr(char *c)
 	write(STDOUT, c, m_strlen(c));
 }
 
-void	m_putnbr(int n)
+void	m_putnbr_base(int n, int base)
 {
-	if (n >= 10)
-		m_putnbr(n / 10);
-	m_putchar(0x30 + (n % 10));
+	m_putstr(m_itoa_base(n, base));
 }
