@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                  ,---.                     */
-/* io.h                                           ,.'-.   \                   */
+/* str_nbr_ops.h                                  ,.'-.   \                   */
 /*                                               ( ( ,'"""""-.                */
 /* Thomas POTIER <thomas.potier@outlook.com>     `,X          `.              */
 /*                                               /` `           `._           */
@@ -17,25 +17,18 @@
 /*                                                  __|            ,-'_       */
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
-/* C: 2017/08/04 23:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 13:35 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* C: 2017/08/05 16:51 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
+/* M: 2017/08/05 17:03 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
-#ifndef IO_H
-# define IO_H
+#ifndef STR_NBR_OPS_H
+# define STR_NBR_OPS_H
 
-# include <unistd.h>
-# include "str.h"
+# include <stdlib.h>
 
-# define STDIN	0
-# define STDOUT	1
-# define STDERR	2
-# define BUFSIZ	1000
-
-void	m_putchar(char c);
-void	m_putstr(char *str);
-void	m_putnbr(int n);
+int		m_atoi(char *str);
+char	*m_itoa(int nbr);
 
 #endif
