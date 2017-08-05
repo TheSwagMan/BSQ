@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                  ,---.                     */
-/* reading.h                                      ,.'-.   \                   */
+/* bsq.h                                          ,.'-.   \                   */
 /*                                               ( ( ,'"""""-.                */
 /* Thomas POTIER <thomas.potier@outlook.com>     `,X          `.              */
 /*                                               /` `           `._           */
@@ -17,21 +17,22 @@
 /*                                                  __|            ,-'_       */
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
-/* C: 2017/08/05 01:45 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 16:06 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* C: 2017/08/05 15:38 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
+/* M: 2017/08/05 15:38 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
-#ifndef READING_H
-# define READING_H
+#ifndef BSQ_H
+# define BSQ_H
 
-# include <stdlib.h>
-# include "io.h"
-# include "linked_data.h"
-# include "bsq.h"
-
-t_linked_data	*get_input_as_bit(int fd);
-t_map_spec		*get_map_spec(int *fd, char **readbuf, int *l);
+typedef struct	s_map_spec
+{
+	int		width;
+	int		height;
+	char	empty;
+	char	obstacle;
+	char	fill;
+}				t_map_spec;
 
 #endif
