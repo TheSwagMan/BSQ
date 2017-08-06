@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/05 12:51 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 12:51 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/06 17:06 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -28,7 +28,8 @@
 
 typedef struct	s_linked_data
 {
-	char					*data;
+	char					*part;
+	int						length;
 	struct s_linked_data	*next;
 }				t_linked_data;
 

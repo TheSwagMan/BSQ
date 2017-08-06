@@ -18,42 +18,74 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 16:14 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/06 21:03 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
 #include "reading.h"
 
-t_linked_data	*get_input_as_bit(int fd)
+t_map_input	*get_input_as_bit(int fd)
 {
-	t_map_spec		ms;
-	t_linked_data	*result;
-	int				l;
-	char			readbuf[BUFSIZ];
-	char			*processbuf;
+	t_map_input		*map;
+	t_reading_buff	*buf;
 
-	ms = *get_map_spec(&fd, (char **)&readbuf, &l);
-	result = malloc(sizeof(*result));
-	while ((l = read(fd, readbuf, BUFSIZ)))
-	{
-		processbuf = malloc(l / 8 + 1);
-		while (l > 0)
-			l--;
-	}
-	(void)ms;
-	(void)processbuf;
-	return (result);
+	if (!(buf = malloc(sizeof(*buf))))
+		exit(ERROR_MALLOC);
+	buf->fd = fd;
+	if (!(map = malloc(sizeof(*map))))
+		exit(ERROR_MALLOC);
+	if (!(map->specs = malloc(sizeof(*(map->data)))))
+		exit(ERROR_MALLOC);
+	if (!(map->data = malloc(sizeof(*(map->data)))))
+		exit(ERROR_MALLOC);
+	get_map(buf, map);
+	return (map);
 }
 
-t_map_spec		*get_map_spec(int *fd, char **readbuf, int *l)
+int			get_map_spec(t_reading_buff *buf, t_map_input *map)
 {
-	int			i;
-	t_map_spec	*ms;
+	if ((buf->c_len = read(buf->fd, buf->buffer, BUFSIZ)) < 0)
+		exit(ERROR_READ);
+	while (buf->c_off < buf->c_len
+			&& buf->buffer[buf->c_off] != '\n')
+		buf->c_off++;
+	map->specs->height = 0;
+	if (buf->buffer[buf->c_off] == '\n' && buf->c_off >= 4)
+	{
+		map->specs->fill = buf->buffer[buf->c_off - 1];
+		map->specs->obstacle = buf->buffer[buf->c_off - 2];
+		map->specs->empty = buf->buffer[buf->c_off - 3];
+		map->specs->height = m_simple_atoi_n(buf->buffer, buf->c_off - 3);
+	}
+	if (map->specs->height <= 0)
+		return (0);
+	return (1);
+}
 
-	ms = malloc(sizeof(*ms));
-	i = 0;
-	*l = read(*fd, *readbuf, BUFSIZ);
-	(void)i;
-	return (ms);
+int			get_map(t_reading_buff *b, t_map_input *map)
+{
+	if (!get_map_spec(b, map))
+		return (0);
+	while (b->c_len)
+	{
+		map->data->length = b->c_len - b->c_off;
+		if (!(map->data->part = malloc(map->data->length / 8 + 1)))
+			exit(ERROR_MALLOC);
+		while (b->c_off < b->c_len)
+		{
+			map->data->part[b->c_off / 8] <<= 1;
+			if (b->buffer[b->c_off] == map->specs->obstacle)
+				map->data->part[b->c_off / 8] |= 1;
+			else if (b->buffer[b->c_off] == map->specs->empty)
+				map->data->part[b->c_off / 8] |= 0;
+			else
+				return (0);
+			map->data = map->data->next;
+			b->c_off++;
+		}
+		if ((b->c_len = read(b->fd, b->buffer, BUFSIZ)) < 0)
+			exit(ERROR_READ);
+	}
+	return (1);
 }

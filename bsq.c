@@ -18,15 +18,35 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:44 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 18:48 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/06 17:55 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
-#include "io.h"
+#include "bsq.h"
+
+#include "reading.h"
+
 int		main(int ac, char **av)
 {
-	if (ac == 2)
-		m_putnbr_base(m_atoi_base(av[1], 16), 10);
+	int	i;
+	int	fd;
+
+	i = 1;
+	if (ac > 1)
+	{
+		while (i < ac)
+		{
+			fd = open(av[i++], O_RDONLY);
+			if (fd <= 0)
+				return (-1);
+			get_input_as_bit(fd);
+			close(fd);
+		}
+	}
+	else
+	{
+		
+	}
 	return (0);
 }

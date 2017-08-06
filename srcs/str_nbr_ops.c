@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/05 16:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 18:59 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/06 18:53 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -84,4 +84,18 @@ int		nbrlen_base(unsigned int nbr, unsigned int base)
 		l++;
 	}
 	return (l);
+}
+
+int		m_simple_atoi_n(char *str, int n)
+{
+	int	i;
+	int	res;
+
+	res = 0;
+	i = 0;
+	while (str[i] >= '0' && str[i] <= '9' && i < n)
+		res = (res * 10) + (str[i++] - 0x30);
+	if (i != n)
+		return (0);
+	return (res);
 }

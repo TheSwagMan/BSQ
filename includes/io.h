@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/05 18:36 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/06 17:51 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -27,6 +27,8 @@
 # define IO_H
 
 # include <unistd.h>
+# include <sys/fcntl.h>
+
 # include "str.h"
 # include "str_nbr_ops.h"
 
@@ -34,6 +36,15 @@
 # define STDOUT	1
 # define STDERR	2
 # define BUFSIZ	1000
+
+typedef struct	s_reading_buff
+{
+	int		fd;
+	char	buffer[BUFSIZ];
+	int		c_len;
+	int		c_off;
+}				t_reading_buff;
+
 
 void	m_putchar(char c);
 void	m_putstr(char *str);

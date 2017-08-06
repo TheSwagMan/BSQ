@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                  ,---.                     */
-/* bsq.h                                          ,.'-.   \                   */
+/* generator.c                                    ,.'-.   \                   */
 /*                                               ( ( ,'"""""-.                */
 /* Thomas POTIER <thomas.potier@outlook.com>     `,X          `.              */
 /*                                               /` `           `._           */
@@ -17,35 +17,47 @@
 /*                                                  __|            ,-'_       */
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
-/* C: 2017/08/05 15:38 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/06 18:12 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* C: 2017/08/06 18:27 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
+/* M: 2017/08/06 18:46 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
-#ifndef BSQ_H
-# define BSQ_H
+#include <sys/time.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-# include "io.h"
-# include "linked_data.h"
+struct timeval	t;
 
-# define ERROR			1
-# define ERROR_MALLOC	2
-# define ERROR_READ		3
-
-typedef struct	s_map_spec
+int		main(int ac, char **av)
 {
-	int		width;
-	int		height;
-	char	empty;
-	char	obstacle;
-	char	fill;
-}				t_map_spec;
+	int		w;
+	int		h;
+	char	*str;
+	int		j;
 
-typedef struct	s_map_input
-{
-	t_map_spec		*specs;
-	t_linked_data	*data;
-}				t_map_input;
-
-#endif
+	if (ac == 7)
+	{
+		h = atoi(av[1]);
+		w = atoi(av[2]);
+		if (!(str = malloc((w + 1) * sizeof(*str))))
+			return (-1);
+		gettimeofday(&t, NULL);
+		srand(t.tv_usec);
+		printf("%i%c%c%c\n", h, *(av[3]),*(av[4]),*(av[5]));
+		while (h-- > 0)
+		{
+			j = w;
+			str[j] = 0;
+			while (j-- > 0)
+			{
+				if (rand() % 1000 > atoi(av[6]))
+					str[j] = *(av[3]);
+				else
+					str[j] = *(av[4]);
+			}
+			printf("%s\n", str);
+		}
+	}
+	return (0);
+}
