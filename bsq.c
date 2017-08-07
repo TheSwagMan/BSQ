@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:44 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/07 15:13 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/07 23:30 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -27,25 +27,44 @@
 
 #include "reading.h"
 
+#include <stdio.h>
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
+#define BYTE_TO_BINARY(byte, c1, c2)\
+	(byte & 0x80 ? c1 : c2),\
+	(byte & 0x40 ? c1 : c2),\
+	(byte & 0x20 ? c1 : c2),\
+	(byte & 0x10 ? c1 : c2),\
+	(byte & 0x08 ? c1 : c2),\
+	(byte & 0x04 ? c1 : c2),\
+	(byte & 0x02 ? c1 : c2),\
+	(byte & 0x01 ? c1 : c2)
+
 void	do_the_bsq(int fd)
 {
 	t_map_input	*map;
+	int			i;
+	int			c;
 
 	map = get_input_as_bit(fd);
 	m_putnbr_base(map->specs->height, 10);
 	m_putchar(map->specs->empty);
 	m_putchar(map->specs->obstacle);
 	m_putchar(map->specs->fill);
-	m_putchar('\n');
+	//m_putchar('\n');
+	c = 0;
 	while (map->data)
 	{
-		m_putnbr_base(map->data->length, 10);
-		m_putchar('\n');
-		if(*map->data->part & 0b10000000)
-			m_putchar(map->specs->obstacle);
-		else
-			m_putchar(map->specs->empty);
-		m_putchar('\n');
+		i = 0;
+		while (i < map->data->length / 8)
+		{
+			printf(BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(map->data->part[i], map->specs->obstacle, map->specs->empty));
+			/*
+			if (c++ % map->specs->width == 0)
+				m_putchar('\n');
+			*/
+			(void)c;
+			i++;
+		}
 		map->data = map->data->next;
 	}
 }

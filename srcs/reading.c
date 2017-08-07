@@ -18,24 +18,12 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/07 22:53 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/07 23:32 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
 #include "reading.h"
-
-#include <stdio.h>
-#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
-#define BYTE_TO_BINARY(byte)  \
-	(byte & 0x80 ? '1' : '0'), \
-	(byte & 0x40 ? '1' : '0'), \
-	(byte & 0x20 ? '1' : '0'), \
-	(byte & 0x10 ? '1' : '0'), \
-	(byte & 0x08 ? '1' : '0'), \
-	(byte & 0x04 ? '1' : '0'), \
-	(byte & 0x02 ? '1' : '0'), \
-	(byte & 0x01 ? '1' : '0') 
 
 t_map_input	*get_input_as_bit(int fd)
 {
@@ -108,7 +96,6 @@ int			get_map(t_reading_buff *b, t_map_input *map)
 			else
 				return (0);
 			tmp[(b->c_off - b_off) / 8] <<= 1;
-			printf("%i : "BYTE_TO_BINARY_PATTERN"\n", b->c_off,  BYTE_TO_BINARY(tmp[(b->c_off - b_off) / 8]));
 			b->c_off++;
 		}
 		tmp[b->c_off / 8] <<= 8 - (b->c_len % 8);
