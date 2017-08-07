@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                  ,---.                     */
-/* bsq.h                                          ,.'-.   \                   */
+/* errors.h                                       ,.'-.   \                   */
 /*                                               ( ( ,'"""""-.                */
 /* Thomas POTIER <thomas.potier@outlook.com>     `,X          `.              */
 /*                                               /` `           `._           */
@@ -17,36 +17,17 @@
 /*                                                  __|            ,-'_       */
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
-/* C: 2017/08/05 15:38 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/07 12:54 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* C: 2017/08/07 12:44 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
+/* M: 2017/08/07 12:45 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
-#ifndef BSQ_H
-# define BSQ_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
-# include "io.h"
-# include "linked_data.h"
-# include "errors.h"
+#include "io.h"
 
-# define ERROR			1
-# define ERROR_MALLOC	2
-# define ERROR_READ		3
-
-typedef struct	s_map_spec
-{
-	int		width;
-	int		height;
-	char	empty;
-	char	obstacle;
-	char	fill;
-}				t_map_spec;
-
-typedef struct	s_map_input
-{
-	t_map_spec		*specs;
-	t_linked_data	*data;
-}				t_map_input;
+void	map_error(void);
 
 #endif

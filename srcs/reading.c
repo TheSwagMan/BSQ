@@ -18,12 +18,14 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/04 23:37 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/06 21:03 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/07 15:41 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
 
 #include "reading.h"
+
+#include <stdio.h>
 
 t_map_input	*get_input_as_bit(int fd)
 {
@@ -32,6 +34,7 @@ t_map_input	*get_input_as_bit(int fd)
 
 	if (!(buf = malloc(sizeof(*buf))))
 		exit(ERROR_MALLOC);
+	buf->c_off = 0;
 	buf->fd = fd;
 	if (!(map = malloc(sizeof(*map))))
 		exit(ERROR_MALLOC);
@@ -63,29 +66,46 @@ int			get_map_spec(t_reading_buff *buf, t_map_input *map)
 	return (1);
 }
 
+int			check_char(char c, t_map_input *map)
+{
+	if (c == map->specs->obstacle
+			|| c == map->specs->empty
+			|| c == '\n')
+		return (1);
+	return (0);
+}
+
 int			get_map(t_reading_buff *b, t_map_input *map)
 {
+	t_linked_data	*tmp;
+
 	if (!get_map_spec(b, map))
 		return (0);
+	tmp = map->data;
 	while (b->c_len)
 	{
-		map->data->length = b->c_len - b->c_off;
-		if (!(map->data->part = malloc(map->data->length / 8 + 1)))
+		if (!(tmp->next = malloc(sizeof(*tmp->next))))
+			exit(ERROR_MALLOC);
+		tmp = tmp->next;
+		tmp->length = b->c_len - b->c_off;
+		if (!(tmp->part = malloc(tmp->length / 8 + 1)))
 			exit(ERROR_MALLOC);
 		while (b->c_off < b->c_len)
 		{
-			map->data->part[b->c_off / 8] <<= 1;
-			if (b->buffer[b->c_off] == map->specs->obstacle)
-				map->data->part[b->c_off / 8] |= 1;
-			else if (b->buffer[b->c_off] == map->specs->empty)
-				map->data->part[b->c_off / 8] |= 0;
+			tmp->part[b->c_off / 8] <<= 1;
+			if (check_char(b->buffer[b->c_off], map))
+			{
+				if (b->buffer[b->c_off] == map->specs->obstacle)
+					tmp->part[b->c_off / 8] |= 1;
+			}
 			else
 				return (0);
-			map->data = map->data->next;
 			b->c_off++;
 		}
+		tmp->part[b->c_off / 8] <<= 8 - (b->c_len % 8);
 		if ((b->c_len = read(b->fd, b->buffer, BUFSIZ)) < 0)
 			exit(ERROR_READ);
 	}
+	map->data = map->data->next;
 	return (1);
 }

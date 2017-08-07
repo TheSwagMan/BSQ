@@ -18,16 +18,16 @@
 #                                                 / `L     `._  _,'  ' `.      #
 #                                                /    `--.._  `',.   _\  `     #
 #  C: 2017/08/05 00:02 by Thomas POTIER          `-.       /\  | `. ( ,\  \    #
-#  M: 2017/08/05 18:37 by Thomas POTIER         _/  `-._  /  \ |--'  (     \   #
+#  M: 2017/08/07 15:42 by Thomas POTIER         _/  `-._  /  \ |--'  (     \   #
 #                                              '  `-.   `'    \/\`.   `.    )  #
 #  CustomHeader ! v1.0                               \  -hrr-    \ `.  |    |  #
 # ############################################################################ #
 
 NAME = bsq
 
-PRTS = io str reading str_nbr_ops
+PRTS = io str reading str_nbr_ops errors
 HEDS = $(PRTS) bsq linked_data
-LIBS = -lm
+LIBS = 
 
 SDIR = srcs
 IDIR = includes
@@ -43,6 +43,9 @@ COMP = gcc
 FLGS = -Wall -Wextra -Werror $(addprefix -I,$(IDIR))
 
 all: dirs $(NAME)
+
+debug: FLGS += -DDEBUG -ggdb3
+debug: re
 
 dirs: $(DIRS)
 
