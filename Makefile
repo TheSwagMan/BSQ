@@ -18,15 +18,15 @@
 #                                                 / `L     `._  _,'  ' `.      #
 #                                                /    `--.._  `',.   _\  `     #
 #  C: 2017/08/05 00:02 by Thomas POTIER          `-.       /\  | `. ( ,\  \    #
-#  M: 2017/08/07 15:42 by Thomas POTIER         _/  `-._  /  \ |--'  (     \   #
+#  M: 2017/08/07 22:30 by Thomas POTIER         _/  `-._  /  \ |--'  (     \   #
 #                                              '  `-.   `'    \/\`.   `.    )  #
 #  CustomHeader ! v1.0                               \  -hrr-    \ `.  |    |  #
 # ############################################################################ #
 
 NAME = bsq
 
-PRTS = io str reading str_nbr_ops errors
-HEDS = $(PRTS) bsq linked_data
+PRTS = io str reading str_nbr_ops errors linked_data
+HEDS = $(PRTS) bsq
 LIBS = 
 
 SDIR = srcs
