@@ -18,7 +18,7 @@
 /*                                                / `L     `._  _,'  ' `.     */
 /*                                               /    `--.._  `',.   _\  `    */
 /* C: 2017/08/05 15:38 by Thomas POTIER          `-.       /\  | `. ( ,\  \   */
-/* M: 2017/08/07 12:54 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
+/* M: 2017/08/07 15:58 by Thomas POTIER         _/  `-._  /  \ |--'  (     \  */
 /*                                             '  `-.   `'    \/\`.   `.    ) */
 /* CustomHeader ! v1.0                               \  -hrr-    \ `.  |    | */
 /* ************************************************************************** */
@@ -29,10 +29,6 @@
 # include "io.h"
 # include "linked_data.h"
 # include "errors.h"
-
-# define ERROR			1
-# define ERROR_MALLOC	2
-# define ERROR_READ		3
 
 typedef struct	s_map_spec
 {
